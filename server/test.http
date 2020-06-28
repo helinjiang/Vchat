@@ -1,0 +1,40 @@
+@url=http://localhost:3001/v
+@json=Content-Type: application/json
+###
+GET {{url}}/user/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppbS1ray1oYyIsImlhdCI6MTU4ODE0MjQyM30.ZlRIhsHzePn2fnS9MTPuFhmN3T81k6wo-rReHFIe9SA
+
+###### post 方法
+post {{url}}/user/login
+{{json}}
+
+{
+    "name":"user4411",
+    "pass":"123456"
+}
+###
+post {{url}}/user/signUp
+{{json}}
+
+{
+    "name":"user4411",
+    "pass":"123456"
+}
+
+###
+
+GET {{url}}/user/github-login
+{{json}}
+###
+
+POST {{url}}/user/huntFriends
+{{json}}
+
+{
+    "userName":"user411"
+}
+
+###
+POST {{url}}/friendly/addFriend
+{{json}}
+

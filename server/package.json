@@ -1,0 +1,17 @@
+{
+  "name": "chartserver",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./app.js",
+    "create": "node ./init.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10",
+    "socket.io": "^2.3.0"
+  }
+}
