@@ -13,7 +13,6 @@ instance.interceptors.request.use(
     let token = localStorage.getItem("token");
     if (token) { // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
       config.headers.Authorization = token;
-      console.log('token 请求拦截')
     }
     return config;
   },
@@ -24,7 +23,6 @@ instance.interceptors.request.use(
 // http response 服务器响应拦截器，这里拦截401错误，并重新跳入登页重新获取token
 instance.interceptors.response.use(
   response => { // 拦截未登录
-    console.log('reponse 拦截')
     if (response.data.status === 0) {
       router.replace('/');
     }
