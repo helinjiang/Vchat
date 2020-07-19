@@ -277,7 +277,9 @@ instance.interceptors.request.use(
 ###### 首先下载speed-measure-webpack-plugin进行速度分析、webpack-bundle-plugin 进行体积分析
 ![在这里插入图片描述](https://github.com/jim-kk-hc/Vchat/blob/master/img/2.png)
 这是体积分析出来的结果，可以看出来这背景图占据了半壁江山。 采用image-loader把背景图压缩。再加上happypack多线程压缩、ParallelUglifyPlugin丑化代码。
-发现差别不大、于是使用speed-measure-webpack-plugin进行速度分析
+
+
+######发现差别不大、于是使用speed-measure-webpack-plugin进行速度分析
 ![在这里插入图片描述](https://github.com/jim-kk-hc/Vchat/blob/master/img/3.png)
 发现应该是loader搜索的时间太长、并且插件打包时间也太长了，exclude include给加上，缓存走起。
 
@@ -287,9 +289,15 @@ ok 质的飞跃！！！！
 别急还没完！！！接着我们在看看体积
 
 引入的模块打包，可以明显的看的element、和vue占据了太多的空间。
-好吧，来个CDN提出去？？？来对比体积
+###### 好吧，来个CDN提出去？？？来对比体积
 CDN 前：
+
+
+
 ![CDN 前](https://github.com/jim-kk-hc/Vchat/blob/master/img/5.png)
 CDN 后：
+
+
+
 ![CDN 后](https://github.com/jim-kk-hc/Vchat/blob/master/img/6.png)
 
