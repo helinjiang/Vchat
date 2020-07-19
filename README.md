@@ -6,7 +6,7 @@
 ```handlebars
 前端主要采用了vue全家桶，学习 Webpack 于是采用其搭建的项目，vuex状态管理，vue-
 router控制路由，axios进行前后端交互。后端是基于node搭的服务，用的是express。本来
-是准备 express 和 koa 都写一版去熟悉的，但是后来于是时间关于，只基于了 express
+是准备 express 和 koa 都写一版去熟悉的，但是后来于是时间关系，只基于了 express。
 聊天最重要的是通信，项目用socket.io来进行前后端通信。
 数据库是mongoDB，主要有用户、好友、消息、账号等。
 ```
@@ -35,6 +35,7 @@ router控制路由，axios进行前后端交互。后端是基于node搭的服�
 ```
 ### 注册：
 1、利用用户表用户名字段判断是否已经被注册了
+
 2、没有注册的话，就在用户表里面去 create 一个用户(用户名、密码、默认头像、个性签名...)
 
 ```c
@@ -47,9 +48,13 @@ router控制路由，axios进行前后端交互。后端是基于node搭的服�
 ### 登录：
 ###### 1、gitLogin OAuth 授权第三方登录
 a. 用户首先跳转到github 提供的第三方登录的链接，询问是否授权第三方登录
+
 b. 同意后 重定向到登录页面并返回 code
+
 c.利用这个 code 加上我们需要去 github 的官网注册拿到 客户端密钥、客户端 id
+
 d. 换取 token
+
 e.去拿到 github 返回的用户信息
 
 ```c
@@ -264,3 +269,26 @@ instance.interceptors.request.use(
         callback({code: -1});
     });
 ```
+### webpack 构建优化
+这是最开始的打包时间。让我一度怀疑电脑死机了。
+于是开始了我的打包优化。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515215650405.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+
+###### 首先下载speed-measure-webpack-plugin进行速度分析、webpack-bundle-plugin 进行体积分析
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515215806881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+这是体积分析出来的结果，可以看出来这背景图占据了半壁江山。 采用image-loader把背景图压缩。再加上happypack多线程压缩、ParallelUglifyPlugin丑化代码。
+发现差别不大、于是使用speed-measure-webpack-plugin进行速度分析
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516091703542.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+发现应该是loader搜索的时间太长、并且插件打包时间也太长了，exclude include给加上，缓存走起。
+
+ok 质的飞跃！！！！
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516092042542.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+
+别急还没完！！！接着我们在看看体积
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516092335394.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+
+这是引入的模块打包，可以明显的看的element、和vue占据了太多的空间。
+好吧，来个CDN提出去？？？来对比体积
+![CDN 前](https://img-blog.csdnimg.cn/20200516094218736.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+![CDN 后](https://img-blog.csdnimg.cn/20200516094231218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+
