@@ -306,14 +306,14 @@ ok 质的飞跃！！！！
 ##### 好吧，来个CDN提出去？？？来对比体积
   
   
-CDN 前：
+CDN 后：
 
 
 
 ![CDN 前](https://github.com/jim-kk-hc/Vchat/blob/master/img/5.png)
   
   
-CDN 后：
+CDN 前：
 
 
 
