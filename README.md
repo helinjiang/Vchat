@@ -272,7 +272,7 @@ instance.interceptors.request.use(
 ### webpack 构建优化
 这是最开始的打包时间。让我一度怀疑电脑死机了。
 于是开始了我的打包优化。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515215650405.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](http://github.com/jim-kk-hc/Vchat/img/1.png)
 
 ###### 首先下载speed-measure-webpack-plugin进行速度分析、webpack-bundle-plugin 进行体积分析
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515215806881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
