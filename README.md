@@ -272,23 +272,24 @@ instance.interceptors.request.use(
 ### webpack 构建优化
 这是最开始的打包时间。让我一度怀疑电脑死机了。
 于是开始了我的打包优化。
-![在这里插入图片描述](http://github.com/jim-kk-hc/Vchat/img/1.png)
+![在这里插入图片描述](https://github.com/jim-kk-hc/Vchat/blob/master/img/1.png)
 
 ###### 首先下载speed-measure-webpack-plugin进行速度分析、webpack-bundle-plugin 进行体积分析
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515215806881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/jim-kk-hc/Vchat/blob/master/img/2.png)
 这是体积分析出来的结果，可以看出来这背景图占据了半壁江山。 采用image-loader把背景图压缩。再加上happypack多线程压缩、ParallelUglifyPlugin丑化代码。
 发现差别不大、于是使用speed-measure-webpack-plugin进行速度分析
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516091703542.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/jim-kk-hc/Vchat/blob/master/img/3.png)
 发现应该是loader搜索的时间太长、并且插件打包时间也太长了，exclude include给加上，缓存走起。
 
 ok 质的飞跃！！！！
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516092042542.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/jim-kk-hc/Vchat/blob/master/img/4.png)
 
 别急还没完！！！接着我们在看看体积
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516092335394.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
 
-这是引入的模块打包，可以明显的看的element、和vue占据了太多的空间。
+引入的模块打包，可以明显的看的element、和vue占据了太多的空间。
 好吧，来个CDN提出去？？？来对比体积
-![CDN 前](https://img-blog.csdnimg.cn/20200516094218736.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
-![CDN 后](https://img-blog.csdnimg.cn/20200516094231218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzMzNTQyNQ==,size_16,color_FFFFFF,t_70)
+CDN 前：
+![CDN 前](https://github.com/jim-kk-hc/Vchat/blob/master/img/5.png)
+CDN 后：
+![CDN 后](https://github.com/jim-kk-hc/Vchat/blob/master/img/6.png)
 
